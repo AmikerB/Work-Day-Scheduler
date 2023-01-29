@@ -1,9 +1,16 @@
 $(document).ready(function () {
 
     //////////// PAGE LAYOUT ////////////
-    // date and time
-    let currentDay = moment().format("dddd Do MMMM, YYYY, HH:mma");
-    $("#currentDay").text(currentDay);
+    // date and time 
+    function currentDay() {
+        let currentDay = moment().format("dddd Do MMMM, YYYY, HH:mma");
+        $("#currentDay").text(currentDay)
+    };
+    // time automatically updates every minute
+    setInterval(function () {
+        currentDay();
+    }, 1000);
+
 
     // hour display 
     var timeValues = [];
@@ -43,65 +50,43 @@ $(document).ready(function () {
 
 
 
-
+    // schedule actvities
     function saveMessage() {
         // item has been saved message
         let saveMessage = document.createElement("p");
         saveMessage.text("Your activity has been saved");
-        saveMessage.classList.add("message", "saved");
-        CSSContainerRule.appendChild(saveMessage);
+        // ?????
 
+        // display message for 3 seconds 
         setTimeout(function () {
             saveMessage.style.display = "none";
-        }, 2000);
+        }, 3000);
     }
 
 
-    // Save to local storage 
-    $("#saveBtn").on("click", function () {
+    // save to local storage
+    let saveBtns = $("saveBtn");
 
-        if (schedule === "") {
-            return;
-        }
+    saveBtns.on("click", function () {
 
-        let scheduleString = localStorage.getItem("storedSchedule");
 
-        let storedSchedule;
-
-        if (scheduleString === null) {
-            storedSchedule = [];
-        } else {
-            storedSchedule = JSON.parse(scheduleString);
-        }
-
-        let schedualObject = {
-            time: hour,
-            schedule: scheduleInput
-        };
-
-        storedSchedule.push(schedualObject);
-
-        localStorage.setItem("storedSchedule", JSON.stringify(storedSchedule));
-
+        // add to local storage 
         saveMessage();
     })
+})
 
 
-});
 
 
-// use .trim() so it gets rid of spaces and stores as a neat string
 
-// delete after ech day
-    // storedSchedule.value = "";
+
 
 //////// ISSUES ///////
 
-// after 12pm it 13pm 14pm and so on
 // display a message at top of screen saying item has been saved
 // save items to local storage
 // delete items at end of the day
-
+    // storedSchedule.value = "";
 
 
 
