@@ -48,31 +48,33 @@ $(document).ready(function () {
     }
 
 
+    $('.saveBtn').click(function () {
+        localStorage.setItem('inputActivity', $('.scheduleInput').val());
+    });
+
+    $(document).ready(function () {
+
+        if (localStorage.getItem('inputValue')) {
+            $('.scheduleInput').val(localStorage.getItem('inputValue'));
+        }
+    });
 
 
-    // schedule actvities
-    function saveMessage() {
-        // item has been saved message
-        let saveMessage = document.createElement("p");
-        saveMessage.text("Your activity has been saved");
-        // ?????
+    // var scheduleInput = $('.scheduleInput')
 
-        // display message for 3 seconds 
-        setTimeout(function () {
-            saveMessage.style.display = "none";
-        }, 3000);
-    }
+    // // // schedule actvities
+    // function saveActivity(event) {
+    //     let btnClicked = $(event.target);
+
+    //     scheduleInput.append()
 
 
-    // save to local storage
-    let saveBtns = $("saveBtn");
+    //     btnClicked.parent('div')// add to local storage
+    // }
 
-    saveBtns.on("click", function () {
+    // scheduleInput.on('click', '.saveBtn', saveActivity);
 
 
-        // add to local storage 
-        saveMessage();
-    })
 })
 
 
@@ -83,7 +85,7 @@ $(document).ready(function () {
 
 //////// ISSUES ///////
 
-// display a message at top of screen saying item has been saved
+// display a message at top of schedule saying item has been saved
 // save items to local storage
 // delete items at end of the day
     // storedSchedule.value = "";
