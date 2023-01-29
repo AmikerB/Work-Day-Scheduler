@@ -19,6 +19,9 @@ $(document).ready(function () {
         timeValues.push(hourValues);
     }
 
+    let timeOut;
+    var saveMessage = $("<p>").addClass("message").text("Your actvity has been saved");
+
     timeValues.forEach((element, index) => {
         var hourBlock = $("<div>").addClass("time-block row");
         var hour = $("<div>")
@@ -26,9 +29,29 @@ $(document).ready(function () {
             .text(element);
         var schedule = $("<input>")
             .addClass("scheduleInput col-8").attr("id", `input-${index}`); // input-index to ensure each element has a unique id
+        var itemValue = localStorage.getItem('inputActivity' + index)
+        if (itemValue) {
+            schedule.val(itemValue);
+        }
         var saveBtn = $("<button>")
             .addClass("saveBtn col-2")
             .html("<i class='fas fa-save'></i>");
+
+        saveBtn.click(function () {
+            localStorage.setItem('inputActivity' + index, schedule.val());
+
+            if (timeOut != null) {
+                clearTimeout(timeOut);
+            } else {
+                $(".jumbotron").append(saveMessage);
+            }
+
+            timeOut = setTimeout(function () {
+                saveMessage.remove();
+                timeOut = null;
+            }, 3000);
+
+        });
 
         hourBlock.append(hour).append(schedule).append(saveBtn);
         $(".container").append(hourBlock);
@@ -47,47 +70,15 @@ $(document).ready(function () {
         }
     }
 
-
-    $('.saveBtn').click(function () {
-        localStorage.setItem('inputActivity', $('.scheduleInput').val());
-    });
-
-    $(document).ready(function () {
-
-        if (localStorage.getItem('inputValue')) {
-            $('.scheduleInput').val(localStorage.getItem('inputValue'));
-        }
-    });
-
-
-    // var scheduleInput = $('.scheduleInput')
-
-    // // // schedule actvities
-    // function saveActivity(event) {
-    //     let btnClicked = $(event.target);
-
-    //     scheduleInput.append()
-
-
-    //     btnClicked.parent('div')// add to local storage
-    // }
-
-    // scheduleInput.on('click', '.saveBtn', saveActivity);
-
-
 })
 
 
 
-
-
-
-
-//////// ISSUES ///////
-
-// display a message at top of schedule saying item has been saved
-// save items to local storage
-// delete items at end of the day
+//////// TO DO ///////
+// add date to each entry into local storage etc jan<>have coffee
+// use splice to get rid of <> etc splice(<>)
+// ahould be returned with (jan26 have coffee)
+// can then compare the date to the current day and if past date delete activity
     // storedSchedule.value = "";
 
 
