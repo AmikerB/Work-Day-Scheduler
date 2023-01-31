@@ -1,6 +1,12 @@
 # Work Day Scheduler
 
-A simple [webpage]() displaying a work day scheduler for the current day using jQuery. Webpage shows the current date with a table below it. The table displays a work day time from 9am to 5pm a section for the user to type in their activity for that hour and save buttons for each section. each hour section is color coded to indicate if that hour and activity are in the past (grey), present (red) or future (green). Once an activity is typd into the text box and the save button is clicked the activity is saved to the local storage with the current date also saved within the local storage. A message also appears at the top of the screen letting the user now their activity has been saved. When it is a new day the activities will be cleared from the sections as the date they were saved does not match the current date.
+A simple [Work Day Scheduler](https://amikerb.github.io/Work-Day-Scheduler/) webpage created using jQuery. Webpage shows the current date with a grid below it. The grid displays sections from 9am to 5pm, a section for the users input and save buttons for each section. 
+
+Each section is color coded to indicate if that hour is in the past (grey), present (red) or future (green). 
+
+Once an activity is typed into the text box and the save button is clicked the activity is saved to the local storage along with the current date. A message will also appears at the top of the screen letting the user know their activity has been saved. 
+
+When it is a new day the activities will be cleared from the sections.
 
 ## Screenshots 
 
