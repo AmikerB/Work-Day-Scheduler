@@ -22,17 +22,20 @@ $(document).ready(function () {
         let schedule = $("<input>")
             .addClass("scheduleInput col-8")
             .attr("id", `input-${index}`); // input-index to ensure each element has a unique id
-        let itemValue = localStorage.getItem(`inputActivity${index}`);
+        let currentInputActivity = `inputActivity${index}`;
+
+        let storedSchedule = localStorage.getItem(currentInputActivity);
+
         // if item does not match todays date then remove it from schedule
-        if (itemValue) {
+        if (storedSchedule) {
             // remove <>
-            let splitInputActivity = itemValue.split("<>");
+            let splitInputActivity = storedSchedule.split("<>");
             // if the date part of string is todays date then show the activity part of string
             if (splitInputActivity[1] === currentDate) {
                 schedule.val(splitInputActivity[0]);
             } else {
                 // if not todays date then remove activity from local storage
-                localStorage.removeItem(`inputActivity${index}`);
+                localStorage.removeItem(currentInputActivity);
             }
         }
 
@@ -41,17 +44,20 @@ $(document).ready(function () {
             .html("<i class='fas fa-save'></i>");
 
         saveBtn.click(function () {
+            // saves input activty to local storage with todays date added
             localStorage.setItem(
-                `inputActivity${index}`,
+                currentInputActivity,
                 schedule.val() + "<>" + currentDate
             );
 
+            // replaces save message with another save message if save button clicked more than once
             if (timeOut != null) {
                 clearTimeout(timeOut);
             } else {
                 $(".jumbotron").append(saveMessage);
             }
 
+            // save message displays for 3 seconds
             timeOut = setTimeout(function () {
                 saveMessage.remove();
                 timeOut = null;
@@ -64,20 +70,20 @@ $(document).ready(function () {
 
     });
 
-
     // check if the hour is in the past present or future and assign a class
     for (let i = 0; i < timeValues.length; i++) {
 
-        // let 
+        // starts at 0 so +9 (0 + 9) so that it represents 9am
+        let eachHourBlock = moment().hour(i + 9);
+        // input-${i} corresponds with the unique id of each element 
+        let currentIndex = $(`#input-${i}`);
 
-        if (moment().isBefore(moment().hour(i + 9))) {
-            // starts at 0 so +9 (0 + 9) so that it represents 9am
-            $(`#input-${i}`).addClass("future");
-            // input-${i} corresponds with the unique id of each element
-        } else if (moment().isAfter(moment().hour(i + 9))) {
-            $(`#input-${i}`).addClass("past");
+        if (moment().isBefore(eachHourBlock)) {
+            currentIndex.addClass("future");
+        } else if (moment().isAfter(eachHourBlock)) {
+            currentIndex.addClass("past");
         } else {
-            $(`#input-${i}`).addClass("present");
+            currentIndex.addClass("present");
         }
     }
 });
