@@ -2,15 +2,8 @@ $(document).ready(function () {
 
     //////////// PAGE LAYOUT ////////////
     // date and time 
-    function currentDay() {
-        let currentDay = moment().format("dddd Do MMMM, YYYY");
-        $("#currentDay").text(currentDay)
-    };
-    // time automatically updates every minute
-    setInterval(function () {
-        currentDay();
-    }, 1000);
-
+    let currentDate = moment().format("dddd Do MMMM, YYYY");
+    $("#currentDay").text(currentDate);
 
     // hour display 
     let timeValues = [];
@@ -35,7 +28,7 @@ $(document).ready(function () {
             // remove <>
             let splitInputActivity = itemValue.split("<>");
             // if the date part of string is todays date then show the activity part of string
-            if (splitInputActivity[1] === moment().format("DD-MM-YYYY")) {
+            if (splitInputActivity[1] === currentDate) {
                 schedule.val(splitInputActivity[0]);
             } else {
                 // if not todays date then remove activity from local storage
@@ -50,7 +43,7 @@ $(document).ready(function () {
         saveBtn.click(function () {
             localStorage.setItem(
                 `inputActivity${index}`,
-                schedule.val() + "<>" + moment().format("DD-MM-YYYY")
+                schedule.val() + "<>" + currentDate
             );
 
             if (timeOut != null) {
@@ -66,6 +59,7 @@ $(document).ready(function () {
         });
 
         hourBlock.append(hour).append(schedule).append(saveBtn);
+
         $(".container").append(hourBlock);
 
     });
@@ -73,6 +67,9 @@ $(document).ready(function () {
 
     // check if the hour is in the past present or future and assign a class
     for (let i = 0; i < timeValues.length; i++) {
+
+        // let 
+
         if (moment().isBefore(moment().hour(i + 9))) {
             // starts at 0 so +9 (0 + 9) so that it represents 9am
             $(`#input-${i}`).addClass("future");
