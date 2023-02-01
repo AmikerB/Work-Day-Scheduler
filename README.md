@@ -11,7 +11,7 @@ When it is a new day the activities will be cleared from the sections.
 ## Screenshots 
 
 ### Screenshot of webpage on desktop:
-![alt text](./assets/images/screenshot.png)
+![alt text](./assets/images/screenshot_day_scheduler.png)
 
 ## Credit 
 
